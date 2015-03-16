@@ -1,8 +1,14 @@
 class UsersController < ApplicationController
   before_filter :only_myself, only: [:edit, :update]
 
+  respond_to :html, :json
+
   def index
-    @users = User.without_user(current_user)
+    @users = User.includes(:team).without_user(current_user)
+    respond_to do |f|
+      f.html {}
+      f.json { respond_with(@users.unshift(current_user).to_json(only: [:id, :status], methods: [:full_name, :team]))}
+    end
   end
 
   def status

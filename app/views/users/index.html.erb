@@ -1,4 +1,4 @@
-<p> 
+<!-- <p>
   <span class="name"> My status </span>
   <span class="status status-<%=current_user.status%>"> <%= current_user.status %> </span>
   <%= link_to("Edit", edit_user_path(current_user), :class => "update-link") %>
@@ -6,7 +6,7 @@
 
 <div id="users-container">
   <% @users.each do |user| %>
-    <p> 
+    <p>
       <%= name_with_status(user.full_name, user.status, user.id) %>
     </p>
   <% end %>
@@ -22,4 +22,32 @@
     });
     return false;
   });
+</script> -->
+
+<div id='users'>
+  <table id='users-table' class='table table-hover table-striped table-bordered'>
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Status</td>
+        <td>Team</td>
+      </td>
+    <thead>
+    <tbody>
+      <%= user_table_row(current_user).html_safe -%>
+      <% @users.each do |user| %>
+      <%= user_table_row(user).html_safe -%>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  React.render(
+    React.createElement(UserTable, {
+      url: "<%= users_path(format: :json)%>",
+      pollInterval: 1000
+    }),
+    document.getElementById('users')
+  )
 </script>

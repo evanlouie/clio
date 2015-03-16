@@ -6,4 +6,21 @@ module ApplicationHelper
       link_to("Update", status_user_path(user_id), :class => "update-link")
   end
 
+  def user_table_row(user)
+    status = lambda do |user|
+      if user.status == :in
+        return "label label-success"
+      else
+        return "label label-warning"
+      end
+    end
+    "<tr><td>" +
+    link_to(user.full_name, user_path(user)) +
+    "</td><td>" +
+    content_tag(:span, user.status.capitalize, class: status.call(user)) +
+    "</td><td>"+link_to(user.team.name, team_path(user.team)) +
+    "</td></tr>"
+
+  end
+
 end

@@ -4,7 +4,7 @@ class TeamsController < ApplicationController
   respond_to :html
 
   def index
-    @teams = Team.all
+    @teams = Team.includes(:users).all
     respond_with(@teams)
   end
 
