@@ -6,10 +6,11 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :status, :first_name, :last_name, :web_site
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :status, :first_name, :last_name, :web_site, :team_id
 
   scope :without_user, lambda {|user| where("id <> :id", :id => user.id) }
 
+  belongs_to :team
 
   STATUSES = {:in => 0, :out => 1}.freeze
 

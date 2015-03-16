@@ -20,13 +20,16 @@ group :assets do
   gem 'therubyracer', '0.12.1', :require => 'v8'
   gem 'execjs'
 
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
+  gem 'sass-rails', '>= 3.2'
+  gem 'coffee-rails'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
+  gem 'bootstrap-sass', '~> 3.3.3'
+  # gem "rails-backbone", '~> 1.1.2', github: 'codebrew/backbone-rails'
+  gem 'react-rails', '~> 1.0.0.pre', github: 'reactjs/react-rails'
 end
 
 gem 'jquery-rails'
@@ -50,3 +53,5 @@ end
 # Deploy with Capistrano
 # gem 'capistrano'
 
+gem 'thin'
+gem 'rb-readline'
