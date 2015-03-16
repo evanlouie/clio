@@ -17,7 +17,7 @@ module ApplicationHelper
     "<tr><td>" +
     link_to(user.full_name, user_path(user)) +
     "</td><td>" +
-    content_tag(:span, user.status.capitalize, class: status.call(user)) +
+    content_tag(:span, link_to(user.status.capitalize, status_user_path(user.id, format: :json), class: "status"), class: status.call(user)) +
     "</td><td>"+link_to(user.team.name, team_path(user.team)) +
     "</td></tr>"
 

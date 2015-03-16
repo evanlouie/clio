@@ -1,22 +1,31 @@
 <h1>Listing teams</h1>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<div id='teams'>
+  <table id='teams-table' class='table table-hover table-striped table-bordered'>
+    <tr>
+      <th>Name</th>
+      <th>Members</th>
+      <th></th>
+      <th></th>
+    </tr>
 
-<% @teams.each do |team| %>
-  <tr>
-    <td><%= team.name %></td>
-    <td><%= link_to 'Show', team %></td>
-    <td><%= link_to 'Edit', edit_team_path(team) %></td>
-    <td><%= link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
-</table>
+  <% @teams.each do |team| %>
+    <tr>
+      <td><%= link_to team.name, team_path(team) %></td>
+      <td>
+        <ul>
+        <% team.users.each do |u| %>
+          <li><%= link_to u.full_name, user_path(u) %>
+        <% end %>
+        </ul>
+      </td>
+      <td><%= link_to 'Edit', edit_team_path(team) %></td>
+      <td><%= link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
+  </table>
+
+</div>
 
 <br />
 

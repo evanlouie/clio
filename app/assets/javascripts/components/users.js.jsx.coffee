@@ -60,3 +60,35 @@
         <td><a href="test">test</a></td>
       </tr>
     )`
+
+@UserStatusBadge = React.createClass
+  getInitialState: ->
+    { data: [] }
+
+  loadStatusFromServer: ->
+    $.ajax
+      url: @props.url
+      dataType: 'json'
+      success: ((data) ->
+        @setState data: data
+        return
+      ).bind(this)
+      error: ((xhr, status, err) ->
+        console.error @props.url, status, err.toString()
+        return
+      ).bind(this)
+    return
+
+  componentDidMount: ->
+    @loadStatusFromServer()
+    setInterval(@loadStatusFromServer, @props.pollInterval)
+
+  render: ->
+    if this.state.data.status == 'in'
+      statusClass = "label label-success"
+    else
+      statusClass = "label label-warning"
+
+    return `(
+      <span className={statusClass}>{this.state.data.status}</span>
+    )`
