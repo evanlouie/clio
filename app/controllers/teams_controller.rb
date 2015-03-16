@@ -4,7 +4,7 @@ class TeamsController < ApplicationController
   respond_to :html
 
   def index
-    @teams = Team.includes(:users).all
+    @teams = Team.includes(:users).paginate(page: params[:page])
     respond_with(@teams)
   end
 

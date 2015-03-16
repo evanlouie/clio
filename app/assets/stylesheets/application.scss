@@ -12,3 +12,8 @@
 
  @import "bootstrap-sprockets";
  @import "bootstrap";
+
+ .pagination-wrapper {
+   width: 600px; /* or whatever width you require */
+   margin: 0 auto;
+ }

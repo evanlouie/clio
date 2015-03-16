@@ -15,7 +15,7 @@
       <td>
         <ul>
         <% team.users.each do |u| %>
-          <li><%= link_to u.full_name, user_path(u) %>
+          <li><%= link_to u.full_name, user_path(u) %> <%= user_status_badge(u) %></span></li>
         <% end %>
         </ul>
       </td>
@@ -29,4 +29,7 @@
 
 <br />
 
+<div class="pagination-wrapper">
+  <%= will_paginate @teams, renderer: BootstrapPagination::Rails %>
+</div>
 <%= link_to 'New Team', new_team_path %>

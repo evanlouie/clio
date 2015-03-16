@@ -85,10 +85,13 @@
 
   render: ->
     if this.state.data.status == 'in'
-      statusClass = "label label-success"
+      statusClass = "status label label-success"
     else
-      statusClass = "label label-warning"
+      statusClass = "status label label-warning"
+      
+    if this.state.data.status?
+      status = this.state.data.status[0].toUpperCase()+this.state.data.status.slice(1)
 
     return `(
-      <span className={statusClass}>{this.state.data.status}</span>
+      <span className={statusClass}>{status}</span>
     )`

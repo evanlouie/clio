@@ -24,6 +24,10 @@
   });
 </script> -->
 
+<div id="current-user-panel">
+
+</div>
+
 <div id='users'>
   <table id='users-table' class='table table-hover table-striped table-bordered'>
     <thead>
@@ -41,62 +45,6 @@
     </tbody>
   </table>
 </div>
-
-
-<script type="text/javascript">
-
-  // $(document).on('click', 'a.status', function(event) {
-  //   event.preventDefault();
-  //   a = this
-  //   $.ajax({
-  //     url: $(this).prop("href"),
-  //     dataType: 'json',
-  //     success: (function(data) {
-  //       $(a).html(data.status[0].toUpperCase() + data.status.slice(1))
-  //     }),
-  //     error: (function(xhr, status,err) {
-  //       console.error($(this).prop("href"), status, err.toString());
-  //     })
-  //   })
-  // })
-  //
-  // $(document).ready(function() {
-  //   (function statusPoll() {
-  //     $('a.status').each(function(index, a) {
-  //       $.ajax({
-  //         url: $(a).prop("href"),
-  //         dataType: "json",
-  //         success: (function(data) {
-  //           $(a).html(data.status[0].toUpperCase() + data.status.slice(1));
-  //           setTimeout(statusPoll, 4000);
-  //         }),
-  //         error: (function(xhr, status, err) {
-  //           console.error($(this).prop("href"), status, err.toString());
-  //         })
-  //       })
-  //     })
-  //   })()
-  // })
-  $(document).ready(function() {
-    $('a.status').each(function(index, a) {
-      React.render(
-        React.createElement(UserStatusBadge, {
-          url: $(a).prop('href'),
-          pollInterval: 3000
-        }),
-        $(a).parent().parent().get(0)
-      )
-    })
-  })
-</script>
-
-
-<script>
-  // React.render(
-  //   React.createElement(UserTable, {
-  //     url: "<%= users_path(format: :json)%>",
-  //     pollInterval: 1000
-  //   }),
-  //   document.getElementById('users')
-  // )
-</script>
+<div class="pagination-wrapper">
+  <%= will_paginate @users, renderer: BootstrapPagination::Rails %>
+</div>

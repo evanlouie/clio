@@ -28,4 +28,11 @@ class User < ActiveRecord::Base
     STATUSES.key(read_attribute(:status))
   end
 
+  def self.search(query)
+    User.where("first_name LIKE ? OR last_name LIKE ? OR email LIKE ?",
+    "%#{query}%",
+    "%#{query}%",
+    "%#{query}%"
+    )
+  end
 end

@@ -1,20 +1,30 @@
-<%= form_for(@user, :html => {:class => "styled-form"}) do |f| %>
-  <label class="styled-label"> My Status:     
-    <%= f.select :status, User::STATUSES.keys, {}, :class => "styled-input" %>    
-  </label>
-  <label class="styled-label"> Email
-    <%= f.text_field :email, :class => "styled-input" %>    
-  </label>
-  <label class="styled-label"> First Name
-    <%= f.text_field :first_name, :class => "styled-input" %>    
-  </label>
-  <label class="styled-label"> Last Name
-    <%= f.text_field :last_name, :class => "styled-input" %>    
-  </label>
-  <label class="styled-label"> Web Site
-    <%= f.text_field :web_site, :class => "styled-input" %>    
-  </label>
-
-  <div><%= f.submit "Save" %></div>
-
-<% end %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4>Edit Profile</h4>
+  </div>
+    <div class='panel-body'>
+      <%= form_for(@user, :html => {:class => "form-group"}) do |f| %>
+      <div class='form-group'>
+        <%= f.label :status %>
+        <%= f.select :status, User::STATUSES.keys, {}, :class => "form-control" %>
+      </div>
+      <div class='form-group'>
+        <%= f.label :email %>
+        <%= f.text_field :email, :class => "form-control" %>
+      </div>
+      <div class='form-group'>
+        <%= f.label :first_name %>
+        <%= f.text_field :first_name, :class => "form-control" %>
+      </div>
+      <div class='form-group'>
+        <%= f.label :last_name %>
+        <%= f.text_field :last_name, :class => "form-control" %>
+      </div>
+      <div class='form-group'>
+        <%= f.label :team_id, 'Team' %>
+        <%= f.select :team_id, options_for_select(Team.all.map{|t| [t.name,t.id]}, current_user.team_id), {}, {class: 'form-control'} %>
+      </div>
+      <div><%= f.submit "Save" %></div>
+    <% end %>
+  </div>
+</div>
