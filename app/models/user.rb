@@ -29,7 +29,8 @@ class User < ActiveRecord::Base
   end
 
   def self.search(query)
-    User.where("first_name LIKE ? OR last_name LIKE ? OR email LIKE ?",
+    User.includes(:team).where("users.first_name LIKE ? OR users.last_name LIKE ? OR users.email LIKE ? OR teams.name LIKE ?",
+    "%#{query}%",
     "%#{query}%",
     "%#{query}%",
     "%#{query}%"
