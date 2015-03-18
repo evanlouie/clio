@@ -7,7 +7,11 @@ class TeamsController < ApplicationController
     @teams = Team.includes(:users).paginate(page: params[:page])
     respond_to do |format|
       format.html {}
-      format.json { respond_with @teams.to_json(include: :users)}
+      format.json do
+        includes = symbolfy_array(params[:include])
+        only = symbolfy_array(params[:only])
+        respond_with @teams.includes(includes).to_json(include: includes, only: only)
+      end
     end
   end
 

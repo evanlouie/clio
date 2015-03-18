@@ -38,7 +38,7 @@
         </div>
       </div>
       <div id='users'>
-        <%= react_component 'UsersTable', {url: users_path, params: params, pollInterval: 1000, users: JSON.parse(@users.to_json(include: :team))} %>
+        <%= react_component 'UsersTable', {url: users_path, params: params.merge({include: [:team], only: [:id, :first_name, :last_name, :status]}), pollInterval: 1000, users: JSON.parse(@users.to_json(include: :team))} %>
         <div class="col-md-8 col-md-offset-2">
           <%= will_paginate @users, renderer: BootstrapPagination::Rails %>
         </div>

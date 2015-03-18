@@ -11,7 +11,12 @@ class UsersController < ApplicationController
     @users = @users.includes(:team).paginate(page: params[:page])
     respond_to do |f|
       f.html {}
-      f.json { respond_with @users.includes(:team).to_json(include: [:team]) }
+      f.json do
+        includes = symbolfy_array(params[:include])
+        only = symbolfy_array(params[:only])
+
+        respond_with @users.includes(includes).to_json(only: only, include: includes)
+      end
     end
   end
 
@@ -47,4 +52,6 @@ class UsersController < ApplicationController
   def set_user
     @user = User.find(params[:id])
   end
+
+
 end
