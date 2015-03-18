@@ -94,11 +94,13 @@
     name = this.state.data.first_name+" "+this.state.data.last_name
     team_url = "/teams/"+this.state.data.team_id
     return `(
-      <div>
-        <i className='fa fa-user'/> <a href={this.props.url}>{name}</a><br/>
-        <i className='fa fa-check'/> <UserStatusBadge data={this.state.data} /><br/>
-        <i className="fa fa-envelope"/> <a href="mailto:{this.state.data.email}">{this.state.data.email}</a><br/>
-        <i className="fa fa-home"/> <a href={this.state.data.web_site}>{this.state.data.web_site}</a><br/>
-        <i className="fa fa-users"/> <a href={team_url}>{this.state.data.team.name}</a><br/>
-      </div>
+      <table className="table table-condensed table-hover">
+        <tbody>
+          <tr><td><i className='fa fa-user'/></td><td><a href={this.props.url}>{name}</a></td></tr>
+          <tr><td><i className='fa fa-check'/></td><td><UserStatusBadge data={this.state.data} /></td></tr>
+          <tr><td><i className="fa fa-envelope"/></td><td><a href="mailto:{this.state.data.email}">{this.state.data.email}</a></td></tr>
+          <tr><td><i className="fa fa-home"/></td><td><a href={this.state.data.web_site}>{this.state.data.web_site}</a></td></tr>
+          <tr><td><i className="fa fa-users"/></td><td><a href={team_url}>{this.state.data.team.name}</a></td></tr>
+        </tbody>
+      </table>
     )`
