@@ -4,18 +4,15 @@ class UsersController < ApplicationController
   respond_to :html, :json
 
   def index
-    if params[:ids]
-      @users = User.where({id: params[:ids]})
-    else
-      @users = User.includes(:team).without_user(current_user).paginate(page: params[:page])
-    end
+    puts YAML::dump(params)
 
-    if params[:query]
-      @users = @users.search(params[:query])
-    end
+    @users = User
+    @users = @users.where({id: params[:ids].split(',').map{|id| id.to_i }}) if params[:ids]
+    @users = @users.search(params[:query]) if params[:query]
+    @users = @users.includes(:team).paginate(page: params[:page])
     respond_to do |f|
       f.html {}
-      f.json { respond_with(@users.unshift(current_user).to_json(only: [:id, :status], methods: [:full_name, :team]))}
+      f.json { respond_with(@users.to_json(only: [:id, :status], methods: [:full_name, :team]))}
     end
   end
 

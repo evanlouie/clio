@@ -1,11 +1,28 @@
-$(document).on 'change', '#current-user-status-control', ->
-  form = $(this).parents("form")
-  data = form.serialize()
-  el = this
-  $(el).prop('disabled', true)
-  $.post form.prop('action'), data, (data) ->
-    $(el).prop('disabled', false)
-  return
+# $(document).on 'change', '#current-user-status-control', ->
+#   form = $(this).parents("form")
+#   data = form.serialize()
+#   el = this
+#   $(el).prop('disabled', true)
+#   $.post form.prop('action'), data, (data) ->
+#     $(el).prop('disabled', false)
+#   return
+
+$(document).on 'change', '#current-user-control-form', ->
+  form = this
+  # $(form).prop('disabled', true)
+  # $.post $(form).prop('action'), $(form).serialize(), (data) ->
+  #   $(form).prop('disabled', false)
+  # return
+  $.ajax
+    url: $(form).prop('action')
+    type: 'PUT'
+    data: $(form).serialize()
+    success: (data) ->
+      $('#current-user-control-panel').html($(data).find('#current-user-control-panel').html())
+      console.log($(data).find('#current-user-control-panel').html())
+    error: (xhr,status, err) ->
+      consol.error xhr, status, err.toString()
+
 
 $(document).on 'input', '#user-search-input', ->
   form = $(this).parents('form')

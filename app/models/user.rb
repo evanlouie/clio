@@ -29,9 +29,12 @@ class User < ActiveRecord::Base
   end
 
   def self.search(query)
-    User.includes(:team).where("users.first_name LIKE ? OR users.last_name LIKE ? OR users.email LIKE ?",
-    "%#{query}%",
-    "%#{query}%",
-    "%#{query}%")
+    build = lambda do |query, mem|
+      return mem if query.size==0
+      term = query.shift
+      return build.call(query, mem.where("users.first_name LIKE ? OR users.last_name LIKE ? OR users.email LIKE ?","%#{term}%", "%#{term}%", "%#{term}%"))
+    end
+
+    build.call(query.gsub(/ /, ',').split(',').map(&:strip).reject(&:empty?), self)
   end
 end
