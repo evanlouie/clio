@@ -1,40 +1,11 @@
-<!-- <p>
-  <span class="name"> My status </span>
-  <span class="status status-<%=current_user.status%>"> <%= current_user.status %> </span>
-  <%= link_to("Edit", edit_user_path(current_user), :class => "update-link") %>
-</p>
-
-<div id="users-container">
-  <% @users.each do |user| %>
-    <p>
-      <%= name_with_status(user.full_name, user.status, user.id) %>
-    </p>
-  <% end %>
-</div>
-
-<script type="text/javascript">
-  $("#users-container a.update-link").click(function(){
-    var block = $(this).parent("p");
-    $.get($(this).attr("href"), function(data){
-      $("a.name", block).html(data["full_name"]);
-      $("span.status", block).removeClass("status-in status-out").
-        addClass("status-"+data["status"]).html(data["status"]);
-    });
-    return false;
-  });
-</script> -->
-
-
 <div class="col-sm-3 col-md-3 sidebar">
   <div class="panel panel-default" id="current-user-control-panel">
     <div class="panel-heading">
-      <h3 class="panel-title"><%= current_user.full_name %></h3>
+      <h3 class="panel-title">My Info</h3>
     </div>
     <div class="panel-body">
-      <ul>
-        <li>Status: <%= user_status_badge current_user %></li>
-        <li>Team: <%= link_to current_user.team.name, team_path(current_user.team) %></li>
-      </ul>
+      <%= react_component 'CurrentUserInfo', {url: user_path(current_user), pollInterval: 1000, data: JSON.parse(current_user.to_json(include: :team)) }%>
+      <hr/>
       <%= form_for(current_user, html: {class: "form-group", id: "current-user-control-form"}) do |f| %>
         <div class='form-group'>
           <%= f.label :status %>
@@ -44,7 +15,6 @@
           <%= f.label :team_id, "Team" %>
           <%= f.select :team_id, Team.all.map{|t| [t.name, t.id]}, {}, {class: "form-control", id: 'current-usr-team-control'} %>
         </div>
-        <!-- <div><%= f.submit "Update", {class: "btn btn-primary"} %></div> -->
       <% end %>
     </div>
   </div>
@@ -57,32 +27,18 @@
     <div class='panel-body'>
       <div class="row">
         <div class="col-md-12">
-          <form class="form-group" id="user-search-form">
+          <form class="form-group" id="user-search-form" method='get'>
             <div class="input-group">
-              <input type="text" class="form-control" id='user-search-input' placeholder="Search user names..." value='<%= params[:query].split(',').join(" ") %>'>
+              <input type="text" name="query" class="form-control" id='user-search-input' placeholder="Search user names..." value='<%= params[:query] ? params[:query].split(',').join(" ") : nil%>'>
               <span class="input-group-btn">
-                <button class="btn btn-default" type="button">Search</button>
+                <input class="btn btn-default" type="submit">Search</input>
               </span>
             </div>
           </form>
         </div>
       </div>
       <div id='users'>
-        <table id='users-table' class='table table-hover'>
-          <thead>
-            <tr>
-              <td>Name</td>
-              <td>Status</td>
-              <td>Team</td>
-            </td>
-          <thead>
-          <tbody>
-            <!-- <%= user_table_row(current_user).html_safe -%> -->
-            <% @users.each do |user| %>
-            <%= user_table_row(user).html_safe -%>
-            <% end %>
-          </tbody>
-        </table>
+        <%= react_component 'UsersTable', {url: users_path, params: params, pollInterval: 1000, users: JSON.parse(@users.to_json(include: :team))} %>
         <div class="col-md-8 col-md-offset-2">
           <%= will_paginate @users, renderer: BootstrapPagination::Rails %>
         </div>
@@ -92,7 +48,3 @@
     </div>
   </div>
 </div>
-
-<% @users.each do |u| %>
-<%= react_component('User', JSON.parse(u.to_json).merge(team: JSON.parse(u.team.to_json)).merge(user_url: user_path(u))) %>
-<% end %>

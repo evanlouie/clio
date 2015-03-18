@@ -1,15 +1,21 @@
 class TeamsController < ApplicationController
   before_filter :set_team, only: [:show, :edit, :update, :destroy]
 
-  respond_to :html
+  respond_to :html, :json
 
   def index
     @teams = Team.includes(:users).paginate(page: params[:page])
-    respond_with(@teams)
+    respond_to do |format|
+      format.html {}
+      format.json { respond_with @teams.to_json(include: :users)}
+    end
   end
 
   def show
-    respond_with(@team)
+    respond_to do |format|
+      format.html {}
+      format.json { respond_with(@team.to_json(include: :users)) }
+    end
   end
 
   def new

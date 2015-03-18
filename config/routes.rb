@@ -1,8 +1,5 @@
 ClioInOutStub::Application.routes.draw do
 
-  resources :teams
-
-
   devise_for :users
 
   resources :users, :only => [:index, :show, :edit, :update] do
@@ -10,7 +7,7 @@ ClioInOutStub::Application.routes.draw do
       get :status
     end
   end
-
+  resources :teams
   root :to => "users#index"
 
 end
