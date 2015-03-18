@@ -39,7 +39,10 @@
         <div id="content">
           <% flash.to_hash.slice(:alert, :error, :notice).each_pair do |type, messages| %>
             <% Array(messages).each do |m| %>
-              <div class="flash-msg alert alert-<%= {success: 'success', notice: 'info', alert: 'danger', error: 'warning'}[type] %> <%= type %>" role='alert'><%= m %></div>
+              <div class="flash-msg alert alert-block alert-<%= {success: 'success', notice: 'info', alert: 'danger', error: 'warning'}[type] %> <%= type %>" role='alert'>
+                <button type="button" class="close" data-dismiss="alert">x</button>
+                <%= m %>
+              </div>
             <% end %>
           <% end %>
           <%= yield %>
