@@ -25,6 +25,7 @@
         <%= f.select :team_id, options_for_select(Team.all.map{|t| [t.name,t.id]}, current_user.team_id), {}, {class: 'form-control'} %>
       </div>
       <div><%= f.submit "Save" %></div>
-    <% end %>
+      <% end %>
+    </div>
   </div>
 </div>

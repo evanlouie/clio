@@ -42,19 +42,7 @@
               <div class="flash-msg alert alert-<%= {success: 'success', notice: 'info', alert: 'danger', error: 'warning'}[type] %> <%= type %>" role='alert'><%= m %></div>
             <% end %>
           <% end %>
-          <div class="col-sm-3 col-md-3 sidebar">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h3 class="panel-title"><%= current_user.full_name %></h3>
-              </div>
-              <div class="panel-body">
-                
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-9 col-md-9 main">
-            <%= yield %>
-          </div>
+          <%= yield %>
         </div>
       </div>
     </div>

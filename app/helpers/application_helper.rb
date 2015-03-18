@@ -2,21 +2,21 @@ module ApplicationHelper
 
   def name_with_status(name, status, user_id)
     link_to(name, user_path(user_id), :class => "name") +
-      content_tag(:span, status, :class => "status status-#{status}") +
+      content_tag(:span, status, :class => "status-badge status-#{status}") +
       link_to("Update", status_user_path(user_id), :class => "update-link")
   end
 
   def user_status_badge(user)
     status = lambda do |user|
       if user.status == :in
-        return "label label-success"
+        return "label label-success label-as-badge"
       else
-        return "label label-warning"
+        return "label label-default label-as-badge"
       end
     end
     ("<span class='status-container'>"+content_tag(
       :span,
-      link_to(user.status.capitalize, status_user_path(user.id, format: :json), class: "status"),
+      link_to(user.status.capitalize, status_user_path(user.id, format: :json), class: "status-badge"),
       class: status.call(user)
     )+"<span>").html_safe
   end
