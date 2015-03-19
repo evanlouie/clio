@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
 
   validates :status, :inclusion => {:in => STATUSES.keys}
 
+
   def full_name
     [first_name, last_name].join(" ")
   end

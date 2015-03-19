@@ -26,22 +26,22 @@
       <table id='users-table' className='table table-hover'>
         <thead>
           <tr>
-            <td>Name</td>
-            <td>Status</td>
-            <td>Team</td>
+            <th>Name</th>
+            <th>Status</th>
+            <th>Team</th>
           </tr>
         </thead>
-        <UsersTableBody data={this.state.users} />
+        <UsersTableBody data={this.state.users} usersResource={this.props.usersResource} teamsResource={this.props.teamsResource}/>
       </table>
     )`
 
 
 @UsersTableBody = React.createClass
   render: ->
-    userNodes = @props.data.map((user) ->
+    userNodes = @props.data.map(((user) ->
       return `(
-        <UsersTableBodyRow key={user.id} data={user} />
-      )`)
+        <UsersTableBodyRow key={user.id} data={user} usersResource={this.props.usersResource} teamsResource={this.props.teamsResource} />
+      )`).bind(this))
     return `(
       <tbody>
         {userNodes}
@@ -51,11 +51,17 @@
 @UsersTableBodyRow = React.createClass
   render: ->
     name = @props.data.first_name+" "+@props.data.last_name
+    user_href = @props.usersResource+"/"+@props.data.id
+    team_href = @props.teamsResource+"/"+@props.data.team_id
+    if @props.data.team
+      team = `<a href={team_href}>{this.props.data.team.name}</a>`
+    else
+      team = "<No Team>"
     return `(
       <tr>
-        <td><span>{name}</span></td>
+        <td><a href={user_href}>{name}</a></td>
         <td><UserStatusBadge data={this.props.data}/></td>
-        <td><span>{this.props.data.team.name}</span></td>
+        <td>{team}</td>
       </tr>
     )`
 
@@ -93,8 +99,12 @@
 
   render: ->
     name = this.state.data.first_name+" "+this.state.data.last_name
-    team_url = "/teams/"+this.state.data.team_id
     mail_to = "mailto:"+this.state.data.email
+    if @state.data.team
+      team_url = this.props.teamsResource+'/'+this.state.data.team_id
+      team = `<a href={team_url}>{this.state.data.team.name}</a>`
+    else
+      team = "<No Team>"
     return `(
       <table className="table table-condensed table-hover">
         <tbody>
@@ -102,7 +112,7 @@
           <tr><td><i className='fa fa-check'/></td><td><UserStatusBadge data={this.state.data} /></td></tr>
           <tr><td><i className="fa fa-envelope"/></td><td><a href={mail_to}>{this.state.data.email}</a></td></tr>
           <tr><td><i className="fa fa-home"/></td><td><a href={this.state.data.web_site}>{this.state.data.web_site}</a></td></tr>
-          <tr><td><i className="fa fa-users"/></td><td><a href={team_url}>{this.state.data.team.name}</a></td></tr>
+          <tr><td><i className="fa fa-users"/></td><td>{team}</td></tr>
         </tbody>
       </table>
     )`

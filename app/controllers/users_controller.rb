@@ -6,9 +6,9 @@ class UsersController < ApplicationController
 
   def index
     @users = User
-    @users = @users.where({id: params[:ids].split(',').map{|id| id.to_i }}) if params[:ids]
+    @users = @users.where({id: params[:id].map{|id| id.to_i }}) if params[:id]
     @users = @users.search(params[:query]) if params[:query]
-    @users = @users.includes(:team).paginate(page: params[:page])
+    @users = @users.includes(:team).paginate(page: params[:page]).order(params[:order])
     respond_to do |f|
       f.html {}
       f.json do

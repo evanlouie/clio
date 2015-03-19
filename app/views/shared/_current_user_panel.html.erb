@@ -1,0 +1,28 @@
+<div class="panel panel-default" id="current-user-control-panel">
+  <div class="panel-heading">
+    <h3 class="panel-title">My Info</h3>
+  </div>
+  <div class="panel-body">
+    <%= react_component(
+          'CurrentUserInfo',
+          {
+            url: user_path(current_user),
+            teamsResource: teams_path,
+            params: params.merge({include: [:team]}),
+            pollInterval: 1000,
+            data: JSON.parse(current_user.to_json(include: :team))
+          }) %>
+    <hr/>
+    <%= form_for(current_user, html: {class: "form-group", id: "current-user-control-form"}) do |f| %>
+      <div class='form-group'>
+        <%= f.label :status %>
+        <%= f.select :status, User::STATUSES.keys.map{|k| [k.capitalize, k]}, {}, {class: "form-control", id: "current-user-status-control"}
+    %>
+      </div>
+      <div class='form-group'>
+        <%= f.label :team_id, "Team" %>
+        <%= f.select :team_id, [["<No Team>", nil]]+Team.all.map{|t| [t.name, t.id]}, {}, {class: "form-control", id: 'current-usr-team-control'} %>
+      </div>
+    <% end %>
+  </div>
+</div>
