@@ -1,10 +1,27 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Name:</b>
-  <%= @team.name %>
-</p>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4><%= @team.name %></h4>
+  </div>
+  <div class="panel-body">
+    <table class='table table-hover'>
+      <thead>
+        <th>Members</th>
+        <th>Status</th>
+      </thead>
+      <tbody>
+        <% @team.users.each do |u| %>
+          <tr>
+            <td><%= u.full_name %></td>
+            <td><%= user_status_badge(u) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
 
+  </div>
+</div>
 
 <%= link_to 'Edit', edit_team_path(@team) %> |
 <%= link_to 'Back', teams_path %>

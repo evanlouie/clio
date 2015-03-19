@@ -8,7 +8,7 @@
     </div>
     <div class='panel-body'>
       <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-10">
           <form class="form-group" id="user-search-form" method='get'>
             <div class="input-group">
               <input type="text" name="query" class="form-control" id='user-search-input' placeholder="Search user names..." value='<%= params[:query] ? params[:query].split(',').join(" ") : nil%>'>
@@ -18,9 +18,12 @@
             </div>
           </form>
         </div>
+        <div class="col-md-2">
+          <%= link_to "New Team", new_team_path, {class: "btn btn-primary"}%>
+        </div>
       </div>
       <div id='teams'>
-        <table id='teams-table' class='table table-hover'>
+        <!-- <table id='teams-table' class='table table-hover'>
           <tr>
             <th>Name</th>
             <th>Members</th>
@@ -42,14 +45,27 @@
             <td><%= link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' } %></td>
           </tr>
         <% end %>
-        </table>
+        </table> -->
         <div class="col-md-8 col-md-offset-2">
           <%= will_paginate @teams, renderer: BootstrapPagination::Rails %>
         </div>
-
+        <%= react_component(
+          'TeamsTable',
+          {
+            url: teams_path,
+            params: params.merge({
+              include: [:users],
+              only: [:id, :name],
+              order: [:status, :first_name, :last_name]}),
+            pollInterval: 1000,
+            usersResource: users_path,
+            teamsResource: teams_path,
+            teams: JSON.parse(@teams.to_json(include: :users))})
+        %>
       </div>
-      <%= link_to 'New Team', new_team_path %>
-
+      <div class="col-md-8 col-md-offset-2">
+        <%= will_paginate @users, renderer: BootstrapPagination::Rails %>
+      </div>
 
     </div>
 

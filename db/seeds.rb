@@ -9,7 +9,8 @@ end
               :password_confirmation => "testtest",
               :status => [:in, :out].sample,
               :web_site => Faker::Internet.url,
-              :team_id => Team.first(offset: rand(Team.count)).id)
+              :team_id => Team.first(offset: rand(Team.count)).id
+              )
 
 end
 User.create(email: 'mail@evanlouie.com', first_name: 'Evan', last_name: 'Louie', password: 'password', password_confirmation: 'password', status: 'in', web_site: 'http://evanlouie.com', team_id: Team.first(offset: rand(Team.count)).id)

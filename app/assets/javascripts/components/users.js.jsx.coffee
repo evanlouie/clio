@@ -52,8 +52,8 @@
   render: ->
     name = @props.data.first_name+" "+@props.data.last_name
     user_href = @props.usersResource+"/"+@props.data.id
-    team_href = @props.teamsResource+"/"+@props.data.team_id
     if @props.data.team
+      team_href = @props.teamsResource+"/"+@props.data.team.id
       team = `<a href={team_href}>{this.props.data.team.name}</a>`
     else
       team = "<No Team>"

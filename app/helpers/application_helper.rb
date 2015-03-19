@@ -7,29 +7,13 @@ module ApplicationHelper
   end
 
   def user_status_badge(user)
-    status = lambda do |user|
-      if user.status == :in
-        return "label label-success label-as-badge"
-      else
-        return "label label-default label-as-badge"
-      end
+    class_name = ""
+    if user.status == :in
+      class_name = "status-badge label label-success label-as-badge"
+    else
+      class_name = "status-badge label label-default label-as-badge"
     end
-    ("<span class='status-container'>"+content_tag(
-      :span,
-      link_to(user.status.capitalize, status_user_path(user.id, format: :json), class: "status-badge"),
-      class: status.call(user)
-    )+"<span>").html_safe
-  end
-
-  def user_table_row(user)
-
-    "<tr><td>" +
-    link_to(user.full_name, user_path(user)) +
-    "</td><td>" +
-    user_status_badge(user) +
-    "</td><td>"+link_to(user.team.name, team_path(user.team)) +
-    "</td></tr>"
-
+    "<span class='#{class_name}'>#{user.status.capitalize}</span>".html_safe
   end
 
 end

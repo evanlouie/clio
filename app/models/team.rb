@@ -1,8 +1,10 @@
 class Team < ActiveRecord::Base
-  attr_accessible :name
+  attr_accessible :name, :users
+
+  validates :name, length: { minimum: 2 }
+  validates :name, uniqueness: true
 
   has_many :users
-  validates_associated :users
 
   def serializable_hash(options={})
     options = {

@@ -11,6 +11,15 @@ class User < ActiveRecord::Base
   scope :without_user, lambda {|user| where("id <> :id", :id => user.id) }
 
   belongs_to :team
+  validates_associated :team
+  validate :valid_team_id
+
+  def valid_team_id
+    unless [nil, Team.all.map{|t| t.id}].flatten.include?(team_id)
+      errors.add(:team_id, "Isn't associated with an existing team")
+    end
+  end
+
 
   STATUSES = {:in => 0, :out => 1}.freeze
 

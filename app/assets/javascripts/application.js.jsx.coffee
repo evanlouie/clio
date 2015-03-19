@@ -22,10 +22,8 @@ $(document).on 'change', '#current-user-control-form', ->
     type: 'PUT'
     data: $(form).serialize()
     success: (data) ->
-      # console.log "Status changed!"
       console.log data
       return
     error: (xhr,status, err) ->
-      # console.log err.toString()
       console.log err
       return
