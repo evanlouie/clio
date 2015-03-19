@@ -79,6 +79,7 @@
   loadUserFromServer: ->
     $.ajax
       url: @props.url
+      data: @props.params
       dataType: 'json'
       success: ((data) ->
         this.setState data: data
@@ -93,12 +94,13 @@
   render: ->
     name = this.state.data.first_name+" "+this.state.data.last_name
     team_url = "/teams/"+this.state.data.team_id
+    mail_to = "mailto:"+this.state.data.email
     return `(
       <table className="table table-condensed table-hover">
         <tbody>
           <tr><td><i className='fa fa-user'/></td><td><a href={this.props.url}>{name}</a></td></tr>
           <tr><td><i className='fa fa-check'/></td><td><UserStatusBadge data={this.state.data} /></td></tr>
-          <tr><td><i className="fa fa-envelope"/></td><td><a href="mailto:{this.state.data.email}">{this.state.data.email}</a></td></tr>
+          <tr><td><i className="fa fa-envelope"/></td><td><a href={mail_to}>{this.state.data.email}</a></td></tr>
           <tr><td><i className="fa fa-home"/></td><td><a href={this.state.data.web_site}>{this.state.data.web_site}</a></td></tr>
           <tr><td><i className="fa fa-users"/></td><td><a href={team_url}>{this.state.data.team.name}</a></td></tr>
         </tbody>

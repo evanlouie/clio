@@ -9,6 +9,7 @@
 
 $(document).on 'change', '#current-user-control-form', ->
   form = this
+  console.log $(form).serialize()
   $.ajax
     url: $(form).prop('action')
     dataType: 'json'
@@ -19,7 +20,8 @@ $(document).on 'change', '#current-user-control-form', ->
       console.log data
       return
     error: (xhr,status, err) ->
-      console.error $(form).prop('action'), status, err.toString()
+      # console.log err.toString()
+      console.log err
       return
 
 

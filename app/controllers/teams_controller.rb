@@ -8,9 +8,7 @@ class TeamsController < ApplicationController
     respond_to do |format|
       format.html {}
       format.json do
-        includes = symbolfy_array(params[:include])
-        only = symbolfy_array(params[:only])
-        respond_with @teams.includes(includes).to_json(include: includes, only: only)
+        respond_with @teams.includes(params[:include]).to_json(include: params[:include], only: params[:only])
       end
     end
   end

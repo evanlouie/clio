@@ -12,10 +12,7 @@ class UsersController < ApplicationController
     respond_to do |f|
       f.html {}
       f.json do
-        includes = symbolfy_array(params[:include])
-        only = symbolfy_array(params[:only])
-
-        respond_with @users.includes(includes).to_json(only: only, include: includes)
+        respond_with @users.includes(params[:include]).to_json(only: params[:only], include: params[:include])
       end
     end
   end
@@ -29,7 +26,7 @@ class UsersController < ApplicationController
   def show
     respond_to do |format|
       format.html {}
-      format.json { respond_with @user.to_json(include: :team)}
+      format.json { respond_with @user.to_json(include: params[:include], only: params[:only])}
     end
   end
 
@@ -38,7 +35,10 @@ class UsersController < ApplicationController
 
   def update
     @user.update_attributes(params[:user])
-    redirect_to users_path
+    respond_to do |format|
+      format.html {redirect_to users_path}
+      format.json { respond_with @user }
+    end
   end
 
   private
