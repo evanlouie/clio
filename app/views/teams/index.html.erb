@@ -11,7 +11,7 @@
         <div class="col-md-10">
           <form class="form-group" id="user-search-form" method='get'>
             <div class="input-group">
-              <input type="text" name="query" class="form-control" id='user-search-input' placeholder="Search user names..." value='<%= params[:query] ? params[:query].split(',').join(" ") : nil%>'>
+              <input type="text" name="query" class="form-control" id='team-search-input' placeholder="Search team names..." value='<%= params[:query] ? params[:query].split(',').join(" ") : nil%>'>
               <span class="input-group-btn">
                 <input class="btn btn-default" type="submit">Search</input>
               </span>
@@ -23,29 +23,6 @@
         </div>
       </div>
       <div id='teams'>
-        <!-- <table id='teams-table' class='table table-hover'>
-          <tr>
-            <th>Name</th>
-            <th>Members</th>
-            <th></th>
-            <th></th>
-          </tr>
-
-        <% @teams.each do |team| %>
-          <tr>
-            <td><%= link_to team.name, team_path(team) %></td>
-            <td>
-              <ul>
-              <% team.users.each do |u| %>
-                <li><%= link_to u.full_name, user_path(u) %> <%= user_status_badge(u) %></span></li>
-              <% end %>
-              </ul>
-            </td>
-            <td><%= link_to 'Edit', edit_team_path(team) %></td>
-            <td><%= link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-          </tr>
-        <% end %>
-        </table> -->
         <div class="col-md-8 col-md-offset-2">
           <%= will_paginate @teams, renderer: BootstrapPagination::Rails %>
         </div>

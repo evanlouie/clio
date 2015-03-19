@@ -4,7 +4,9 @@ class TeamsController < ApplicationController
   respond_to :html, :json
 
   def index
-    @teams = Team.includes(:users).paginate(page: params[:page])
+    @teams = Team
+    @teams = @teams.search(params[:query]) if params[:query]
+    @teams = @teams.includes(:users).paginate(page: params[:page])
     respond_to do |format|
       format.html {}
       format.json do
