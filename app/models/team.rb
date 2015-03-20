@@ -15,6 +15,12 @@ class Team < ActiveRecord::Base
 
 
   def self.search(query)
-    Team.where("name LIKE ?", "%#{query}%")
+    build = lambda do |query, mem|
+      return mem if query.size==0
+      term = query.shift
+      return build.call(query, mem.where("teams.name LIKE ?","%#{term}%"))
+    end
+
+    build.call(query.gsub(/ /, ',').split(',').map(&:strip).reject(&:empty?), self)
   end
 end

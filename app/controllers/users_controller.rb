@@ -37,7 +37,7 @@ class UsersController < ApplicationController
     @user.update_attributes(params[:user])
     respond_to do |format|
       format.html {redirect_to users_path}
-      format.json { respond_with @user }
+      format.json { respond_with @user.to_json }
     end
   end
 
