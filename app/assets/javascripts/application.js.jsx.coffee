@@ -15,14 +15,12 @@ $(document).ready ->
 
 $(document).on 'change', '#current-user-control-form', ->
   form = this
-  console.log $(form).serialize()
   $.ajax
     url: $(form).prop('action')
     dataType: 'json'
     type: 'PUT'
     data: $(form).serialize()
     success: (data) ->
-      console.log data
       return
     error: (xhr,status, err) ->
       console.log err
