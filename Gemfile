@@ -28,7 +28,6 @@ group :assets do
 
   gem 'uglifier', '>= 1.0.3'
   gem 'bootstrap-sass', '~> 3.3.3'
-  # gem "rails-backbone", '~> 1.1.2', github: 'codebrew/backbone-rails'
   gem 'react-rails', '~> 1.0.0.pre', github: 'reactjs/react-rails'
   gem 'will_paginate', '~> 3.0.6'
   gem 'will_paginate-bootstrap'
