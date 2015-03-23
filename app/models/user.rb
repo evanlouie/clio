@@ -29,6 +29,27 @@ class User < ActiveRecord::Base
     STATUSES.key(read_attribute(:status))
   end
 
+  [:current_sign_in_ip, :last_sign_in_ip].each do |field|
+    define_method(field) do
+      ip = read_attribute(field)
+      return nil unless ip
+      ip += 4_294_967_296 if ip < 0 # Convert from 2's complement
+      "#{(ip & 0xFF000000) >> 24}.#{(ip & 0x00FF0000) >> 16}.#{(ip & 0x0000FF00) >> 8}.#{ip & 0x000000FF}"
+    end
+
+    define_method("#{field}=") do |value|
+      quads = value.split('.')
+      if quads.length == 4
+        as_int = (quads[0].to_i * (2**24)) + (quads[1].to_i * (2**16)) + (quads[2].to_i * (2**8)) + quads[3].to_i
+        as_int -= 4_294_967_296 if as_int > 2147483647 # Convert to 2's complement
+      else
+        as_int = nil
+      end
+      write_attribute(field, as_int)
+    end
+
+  end
+
   def self.search(query)
     build = lambda do |query, mem|
       return mem if query.size==0
