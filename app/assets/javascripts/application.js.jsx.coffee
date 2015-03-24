@@ -25,3 +25,10 @@ $(document).on 'change', '#current-user-control-form', ->
     error: (xhr,status, err) ->
       console.log err
       return
+
+@timeoutLoop = (fun, interval) ->
+  setTimeout( (->
+    fun()
+    @timeoutLoop
+    ), interval)
+  return

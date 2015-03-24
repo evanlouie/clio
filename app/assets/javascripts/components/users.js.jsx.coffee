@@ -19,7 +19,10 @@
 
   componentDidMount: ->
     @loadUsersFromServer()
-    setInterval(@loadUsersFromServer, @props.pollInterval)
+    # setInterval(@loadUsersFromServer, @props.pollInterval)
+    do refreshLoop = (->
+      @loadUsersFromServer()
+      setTimeout(refreshLoop, @props.pollInterval)).bind(this)
 
   render: ->
     return `(
@@ -95,7 +98,10 @@
         ).bind(this)
   componentDidMount: ->
     @loadUserFromServer()
-    setInterval(@loadUserFromServer, @props.pollInterval)
+    # setInterval(@loadUserFromServer, @props.pollInterval)
+    do refreshLoop = (->
+      @loadUserFromServer()
+      setTimeout(refreshLoop, @props.pollInterval)).bind(this)
 
   render: ->
     name = this.state.data.first_name+" "+this.state.data.last_name

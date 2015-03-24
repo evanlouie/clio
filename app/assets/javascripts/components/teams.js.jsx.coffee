@@ -19,7 +19,10 @@
 
   componentDidMount: ->
     @loadTeamsFromServer()
-    setInterval(@loadTeamsFromServer, @props.pollInterval)
+    # setInterval(@loadTeamsFromServer, @props.pollInterval)
+    do refreshLoop = (->
+      @loadTeamsFromServer()
+      setTimeout(refreshLoop, @props.pollInterval)).bind(this)
 
   render: ->
     return `(
