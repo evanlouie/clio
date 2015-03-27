@@ -5,20 +5,24 @@
     <div class='panel-body'>
       <%= form_for(@user, :html => {:class => "form-group"}) do |f| %>
       <div class='form-group'>
-        <%= f.label :status %>
-        <%= f.select :status, User::STATUSES.keys, {}, :class => "form-control" %>
-      </div>
-      <div class='form-group'>
-        <%= f.label :email %>
-        <%= f.text_field :email, :class => "form-control" %>
-      </div>
-      <div class='form-group'>
         <%= f.label :first_name %>
         <%= f.text_field :first_name, :class => "form-control" %>
       </div>
       <div class='form-group'>
         <%= f.label :last_name %>
         <%= f.text_field :last_name, :class => "form-control" %>
+      </div>
+      <div class='form-group'>
+        <%= f.label :email %>
+        <%= f.text_field :email, :class => "form-control" %>
+      </div>
+      <div class='form-group'>
+        <%= f.label :website %>
+        <%= f.text_field :web_site, :class => "form-control" %>
+      </div>
+      <div class='form-group'>
+        <%= f.label :status %>
+        <%= f.select :status, User::STATUSES.keys, {}, :class => "form-control" %>
       </div>
       <div class='form-group'>
         <%= f.label :team_id, 'Team' %>

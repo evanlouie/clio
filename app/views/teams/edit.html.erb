@@ -1,5 +1,8 @@
 <div class="panel panel-default">
   <div class="panel-heading">
+    <div class="btn-group pull-right">
+      <%= link_to 'Destroy', @team ,  method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+    </div>
     <h4>Edit Team</h4>
   </div>
   <div class="panel-body">
@@ -10,4 +13,3 @@
 <%= link_to 'Show', @team %> |
 <%= link_to 'Back', teams_path %>
 </div>
-<%= link_to 'Destroy', @team ,  method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger col-md-1 col-md-offset-9' %>

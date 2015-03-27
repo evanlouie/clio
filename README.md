@@ -1,5 +1,11 @@
 # Clio In/Out Board skeleton
 
+## Instructions
+- Run `bundle install` to install latest Gemfile.lock
+- Create DB: `rake db:setup`
+- Run: `rails s`
+- To run RSpec and create a coverage report you might need to run `rake db:test:prepare`
+
 ## README
 
 ### General
@@ -9,7 +15,7 @@
 - Turbolinks added
 
 ### Asynchronous Updates
-- Implemented with recursive setTimeout loop (`/app/assets/javascripts/components/[users.js.jsx.cofee, teams.js.jsx.coffee]`)
+- Implemented with recursive setTimeout loop (`/app/assets/javascripts/components/[users.js.jsx.cofee, teams.js.jsx.coffee]`) (set to update every 1+(RTT) second)
 - Updates to DOM are handled using the React library
 
 ### Teams

@@ -1,17 +1,45 @@
-<table>
-  <tr>
-    <td> Status: </td>
-    <td> <strong><%= @user.status %></strong> </td>
-  </tr>
-  <tr>
-    <td> Email: </td>
-    <td> <strong><%= @user.email %></strong> </td>
-  </tr>
-  <tr>
-    <td> Name: </td>
-    <td> <strong><%= @user.full_name %></strong> </td>
-  </tr>
-  <tr>
-    <td colspan="2"> <%= link_to "Web Site", @user.web_site %> </td>
-  </tr>
-</table>
+<p id="notice"><%= notice %></p>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4><%= @user.full_name %></h4>
+  </div>
+  <div class="panel-body">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Attribute</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>User ID: </td>
+          <td><%= @user.id %></td>
+        </tr>
+        <tr>
+          <td> First Name: </td>
+          <td><%= @user.first_name %></td>
+        </tr>
+        <tr>
+          <td> Last Name: </td>
+          <td><%= @user.last_name %></td>
+        </tr>
+        <tr>
+          <td> Status: </td>
+          <td><%= user_status_badge @user %></td>
+        </tr>
+        <tr>
+          <td> Email: </td>
+          <td> <%= link_to @user.email, "mailto:#{@user.email}" %></td>
+        </tr>
+        <tr>
+          <td> Website: </td>
+          <td><%= link_to @user.web_site, @user.web_site %></td>
+        </tr>
+      </tbody>
+    </table>
+    <%= link_to('Edit', edit_user_path(@user), class: 'btn btn-primary') if current_user == @user %>
+  </div>
+</div>
+<%= link_to 'Back', users_path %>

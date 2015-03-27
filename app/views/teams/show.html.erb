@@ -13,7 +13,7 @@
       <tbody>
         <% @team.users.each do |u| %>
           <tr>
-            <td><%= u.full_name %></td>
+            <td><%= link_to u.full_name, u %></td>
             <td><%= user_status_badge(u) %></td>
           </tr>
         <% end %>
