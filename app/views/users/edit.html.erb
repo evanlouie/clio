@@ -28,7 +28,7 @@
         <%= f.label :team_id, 'Team' %>
         <%= f.select :team_id, options_for_select(Team.all.map{|t| [t.name,t.id]}, current_user.team_id), {}, {class: 'form-control'} %>
       </div>
-      <div><%= f.submit "Save", {class: "btn btn-primary"} %></div>
+      <div class="btn-group pull-right"><%= f.submit "Save", {class: "btn btn-primary"} %></div>
       <% end %>
     </div>
   </div>

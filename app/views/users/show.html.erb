@@ -2,6 +2,9 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
+    <div class="btn-group pull-right">
+      <%= link_to('Edit', edit_user_path(@user), class: 'btn btn-primary') if current_user == @user %>
+    </div>
     <h4><%= @user.full_name %></h4>
   </div>
   <div class="panel-body">
@@ -39,7 +42,6 @@
         </tr>
       </tbody>
     </table>
-    <%= link_to('Edit', edit_user_path(@user), class: 'btn btn-primary') if current_user == @user %>
   </div>
 </div>
 <%= link_to 'Back', users_path %>

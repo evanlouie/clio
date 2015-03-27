@@ -34,11 +34,13 @@ class TeamsController < ApplicationController
   def create
     @team = Team.new(params[:team])
     @team.save
+    claim_users
     respond_with(@team)
   end
 
   def update
     @team.update_attributes(params[:team])
+    claim_users
     respond_with(@team)
   end
 
@@ -50,6 +52,13 @@ class TeamsController < ApplicationController
   private
     def set_team
       @team = Team.find(params[:id])
+    end
+
+    def claim_users
+      User.where(id: params[:user_id]).each do |u|
+        u.team = @team
+        u.save
+      end
     end
 
     def valid_params

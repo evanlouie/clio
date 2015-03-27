@@ -18,5 +18,7 @@
     <%= f.label :users %>
     <%= select_tag :user_id, options_for_select(User.order(:first_name).all.map{|u| [u.full_name, u.id]}, User.where(team_id: @team.id).map{|u| u.id}), {multiple: true, class: 'form-control', style: 'height: 500px;'} %>
   </div>
-  <%= f.submit t('.submit', :default => "Submit"), class: "btn btn-primary" %>
+  <div class="btn-group pull-right">
+    <%= f.submit t('.submit', :default => "Submit"), class: "btn btn-primary" %>
+  </div>
 <% end %>
