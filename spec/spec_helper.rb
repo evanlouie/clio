@@ -1,7 +1,7 @@
 require 'simplecov'
 SimpleCov.start 'rails' do
   add_filter "/spec"
-  add_filter "/vendor"  
+  add_filter "/vendor"
 end if ENV["COVERAGE"]
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
@@ -18,6 +18,9 @@ Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
 RSpec.configure do |config|
 
+  config.expect_with :rspec do |c|
+    c.syntax = [:should, :expect]
+  end
   config.include Devise::TestHelpers, :type => :controller
   config.include FactoryGirl::Syntax::Methods
   # ## Mock Framework

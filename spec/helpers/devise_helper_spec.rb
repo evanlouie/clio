@@ -9,13 +9,13 @@ describe DeviseHelper do
   end
 
   describe "No Error Message" do
-    it { helper.devise_error_messages!.should eql("") }
+    it { expect(helper.devise_error_messages!).to eql("") }
   end
 
   describe "Error Message Present" do
     it {
       view.stub(:resource).and_return(User.create)
-      helper.devise_error_messages!.should_not eql("")
+      expect(helper.devise_error_messages!).not_to eq("")
     }
   end
 end

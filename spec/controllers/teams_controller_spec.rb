@@ -58,7 +58,7 @@ RSpec.describe TeamsController, :type => :controller do
       it 'returns @teams as json' do
         team = Team.create! valid_attributes
         get :index, {format: :json}
-        response.body.should == [team].to_json(only: nil)
+        expect(response.body).to eq([team].to_json(only: nil))
       end
     end
 

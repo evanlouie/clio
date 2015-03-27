@@ -30,14 +30,14 @@ describe User do
       it 'updates successfully' do
         user.team_id = team.id
         user.save
-        user.errors[:team_id].should be_empty
+        expect(user.errors[:team_id].size).to be == 0 
       end
     end
     context 'invalid team_id' do
       it 'adds to errors' do
         user.team_id = 123
         user.save
-        user.errors[:team_id].size.should > 0
+        expect(user.errors[:team_id].size).to be > 0
       end
     end
   end
@@ -45,12 +45,12 @@ describe User do
   describe "#current_sign_in_ip= and #last_sign_in_ip=" do
     context "provided with valid ip string" do
       it 'converts the string to an int and returns the value of the writeback' do
-        (user.current_sign_in_ip= '192.168.0.1').should == "192.168.0.1"
+        expect(user.current_sign_in_ip= '192.168.0.1').to be == "192.168.0.1"
       end
     end
     context 'provided with invalid ip string' do
       it 'converts string to nil and returns value of writeback' do
-        (user.current_sign_in_ip= '123').should == '123'
+        expect(user.current_sign_in_ip= '123').to be == '123'
       end
     end
   end
@@ -59,7 +59,7 @@ describe User do
     context 'user has an ip stored' do
       it 'returns the ip as as string' do
         user.current_sign_in_ip='192.168.0.1'
-        user.current_sign_in_ip.should == '192.168.0.1'
+        expect(user.current_sign_in_ip).to be == '192.168.0.1'
       end
     end
   end
@@ -68,7 +68,7 @@ describe User do
 
     context "when valid first name and last name" do
       it "returns the combined full name" do
-        user.full_name.should == 'Test Person'
+        expect(user.full_name).to be == 'Test Person'
       end
     end
   end
@@ -76,13 +76,13 @@ describe User do
   describe "#search" do
     context "when no query provided" do
       it "returns empty where clause" do
-        User.search("").should == User
+        expect(User.search("")).to be == User
       end
     end
 
     context "when multi worded query provided" do
       it 'appends each term in a separate where clause' do
-        User.search("sample search").should == User.where('users.first_name LIKE ? OR users.last_name LIKE ? OR users.email LIKE ?',"%sample%","%sample%","%sample%").where('users.first_name LIKE ? OR users.last_name LIKE ? OR users.email LIKE ?', '%search%', '%search%', '%search%')
+        expect(User.search("sample search")).to be == User.where('users.first_name LIKE ? OR users.last_name LIKE ? OR users.email LIKE ?',"%sample%","%sample%","%sample%").where('users.first_name LIKE ? OR users.last_name LIKE ? OR users.email LIKE ?', '%search%', '%search%', '%search%')
       end
     end
   end

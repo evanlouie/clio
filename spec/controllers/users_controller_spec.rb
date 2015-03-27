@@ -21,7 +21,7 @@ RSpec.describe UsersController, type: :controller do
     describe 'json' do
       before {get :index, format: :json}
       it 'responds with @users as json' do
-        response.body.should == [user].to_json
+        expect(response.body).to eq [user].to_json
       end
     end
   end
@@ -29,7 +29,7 @@ RSpec.describe UsersController, type: :controller do
   describe 'GET #status' do
     it 'responds with @users as json' do
       get :status, {format: :json, id: user.id}
-      response.body.should == user.to_json(:only => [:id, :status], :methods => [:full_name])
+      expect(response.body).to eq user.to_json(:only => [:id, :status], :methods => [:full_name])
     end
   end
 
@@ -45,7 +45,7 @@ RSpec.describe UsersController, type: :controller do
     describe 'json' do
       it 'responds with @user.to_json' do
         get :show, {format: :json, id: user.id}
-        response.body.should == user.to_json
+        expect(response.body).to eq user.to_json
       end
     end
   end
@@ -56,7 +56,7 @@ RSpec.describe UsersController, type: :controller do
       describe 'trying to modify another user' do
         it 'redirects to users_path' do
           put :update, {id: another_user.id, first_name: 'foo'}
-          flash[:alert].size.should > 0
+          expect(flash[:alert].size).to be > 0
         end
       end
       it 'redirects to users_path' do
@@ -68,7 +68,7 @@ RSpec.describe UsersController, type: :controller do
     describe 'JSON' do
       it 'returns the updated user object as json' do
         get :update, {format: :json, id: user.id}
-        response.body.should == user.to_json
+        expect(response.body).to eq user.to_json
       end
     end
   end
