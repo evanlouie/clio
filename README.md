@@ -4,7 +4,7 @@
 - Run `bundle install` to install latest Gemfile.lock
 - Create DB: `rake db:setup`
 - Run: `rails s`
-- To run RSpec and create a coverage report you might need to run `rake db:test:prepare`
+- To run RSpec and create a coverage report you might need to run `rake db:test:prepare` beforehand 
 
 ## README
 
