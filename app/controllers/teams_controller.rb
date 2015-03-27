@@ -1,5 +1,6 @@
 class TeamsController < ApplicationController
   before_filter :set_team, only: [:show, :edit, :update, :destroy]
+  before_filter :valid_params, only: [:index]
 
   respond_to :html, :json
 
@@ -49,5 +50,25 @@ class TeamsController < ApplicationController
   private
     def set_team
       @team = Team.find(params[:id])
+    end
+
+    def valid_params
+      errors = []
+      errors.push("id must be array") if !params[:id].is_a?(Array) && params[:id]!=nil
+
+      [params[:order]].flatten.each do |o|
+        errors.push("#{o} is not a valid ordering attribute") unless ([nil]+Team.column_names).include?(o)
+      end
+
+      [params[:include]].flatten.each do |i|
+        errors.push("#{i} is not a valid association") unless ([nil]+Team.reflect_on_all_associations.map{|r| r.name.to_s}).include?(i)
+      end
+
+      [params[:only]].flatten.each do |o|
+        errors.push("#{o} is not a valid attribute") unless ([nil]+Team.column_names).include?(o)
+      end
+
+      raise ArgumentError, errors unless errors.size==0
+
     end
 end

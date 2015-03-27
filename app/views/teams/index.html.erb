@@ -32,8 +32,7 @@
             url: teams_path,
             params: params.merge({
               include: [:users],
-              only: [:id, :name],
-              order: [:status, :first_name, :last_name]}),
+              only: [:id, :name]}),
             pollInterval: 1000,
             usersResource: users_path,
             teamsResource: teams_path,
